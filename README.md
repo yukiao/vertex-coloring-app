@@ -1,6 +1,6 @@
 # edge-coloring-app
 
-This a web app for demonstrating the coloring of edges on graph
+This a project for demonstrating the coloring of edges on graph. Build using [Cytoscape.js](http://js.cytoscape.org) and [tailwindcss](http://tailwindcss.com)
 
 ## Feature  
 - [x] Add Node
