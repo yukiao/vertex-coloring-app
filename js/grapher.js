@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Inisialisasi objek cytoscape
+    var selectedItem;
+    
     var cy = (window.cy = cytoscape({
         // container merujuk pada id dari element html untuk menampung hasil dari graph
         container: document.getElementById("cy"),
@@ -28,6 +30,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     "text-valign": "center",
                     "text-halign": "center",
                 },
+            },
+            {
+                selector: "edge",
+                style: {
+                    "curve-style": "bezier",
+                }
+
             },
 
             // some style for the extension
@@ -92,7 +101,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 { data: { id: "e"} },
                 { data: { id: "g"} },
             ],
-            edges: [{ data: { source: "g", target: "e" } }],
+            edges: [
+                { data: { source: "g", target: "e"}, 
+            }],
         },
     }));
 
@@ -117,20 +128,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     directed: false,
                 }).run();
             } catch (error) {
-                console.log("An error has occured upon adding node:" + nodeId)
+                console.log("An error has occured upon adding node:" + nodeId);
             }
-            
-
-            
         }
     });
 
-    let btnRemoveNode = document.getElementById("btn-remove-node");
+    let btnRemoveNode = document.getElementById("btn-remove");
     btnRemoveNode.addEventListener("click", function(e) {
-        let nodeId = document.getElementById("remove-node").value;
         try {
-            let node = cy.getElementById(nodeId);
-            cy.remove(node);
+            cy.remove(selectedItem);
             cy.layout({
                 name: "circle",
                 animate: true,
@@ -138,8 +144,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 animationEase: "ease-in-out",
                 directed: false,
             }).run();
-        } catch (error) {
-            console.log("Couldn't find node: "+ nodeId)
+        } catch (e) {
+            console.log("Error couldn't locate object!");
         }
+    })
+
+    cy.on('tap', function(event) {
+        selectedItem = event.target
     })
 });
