@@ -11,16 +11,23 @@ document.addEventListener("DOMContentLoaded", function () {
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
   if (savedElements) {
-    savedElements.nodes = savedElements.nodes.filter((node) => {
-      return !(
-        node.classes.includes("eh-handle") || node.classes.includes("eh-ghost")
-      );
-    });
-    savedElements.edges = savedElements.edges.filter((edge) => {
-      return !(
-        edge.classes.includes("eh-handle") || edge.classes.includes("eh-ghost")
-      );
-    });
+    if (savedElements.nodes) {
+      savedElements.nodes = savedElements.nodes.filter((node) => {
+        return !(
+          node.classes.includes("eh-handle") ||
+          node.classes.includes("eh-ghost")
+        );
+      });
+    }
+
+    if (savedElements.edges) {
+      savedElements.edges = savedElements.edges.filter((edge) => {
+        return !(
+          edge.classes.includes("eh-handle") ||
+          edge.classes.includes("eh-ghost")
+        );
+      });
+    }
   }
 
   // Inisialisasi objek cytoscape
