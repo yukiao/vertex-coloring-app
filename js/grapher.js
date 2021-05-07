@@ -102,11 +102,26 @@ document.addEventListener("DOMContentLoaded", function () {
     btnAddNode.addEventListener("click", function (e) {
         let nodeId = document.getElementById("add-node").value;
         if (nodeId != "") {
-            cy.add({
-                data: {
-                    id: nodeId,
-                },
-            });
+            try {
+                cy.add({
+                    group: "nodes",
+                    data: {
+                        id: nodeId,
+                    },
+                });
+                cy.layout({
+                    name: "circle",
+                    animate: true,
+                    animationDuration: 500,
+                    animationEase: "ease-in-out",
+                    directed: false,
+                }).run();
+            } catch (error) {
+                console.log("An error has occured upon adding node:" + nodeId)
+            }
+            
+
+            
         }
     });
 
@@ -116,6 +131,13 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             let node = cy.getElementById(nodeId);
             cy.remove(node);
+            cy.layout({
+                name: "circle",
+                animate: true,
+                animationDuration: 500,
+                animationEase: "ease-in-out",
+                directed: false,
+            }).run();
         } catch (error) {
             console.log("Couldn't find node: "+ nodeId)
         }
