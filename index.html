@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Edge Coloring</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"/>
-  <link href="css/style.css" rel="stylesheet"/>
-</head>
+  <head>
+    <title>Edge Coloring</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-<body class="box-border py-5">
-  <div class="w-5/6 mx-auto flex h-full">
-    <div id="cy" class="flex-1 h-full border-4 border-black rounded-xl"></div>
-    <div class="flex-1 p-5">
-      <div>
-        <input id="add-node" type="text" class="border-2 border-gray-400 h-11 rounded-md px-2" placeholder="Insert Node" />
-        <button id="btn-add-node" class="bg-purple-500 h-11 w-20 rounded-md text-white font-bold">Add</button>
-      </div>
-      <div class="mt-2">
-        <button id="btn-remove" class="bg-purple-500 h-11 w-20 rounded-md text-white font-bold">Remove</button>
+  <body class="box-border py-5">
+    <div class="w-5/6 mx-auto flex h-full">
+      <div id="cy" class="flex-1 h-full border-4 border-black rounded-xl"></div>
+      <div class="flex-1 p-5">
+        <div>
+          <input
+            id="add-node"
+            type="text"
+            class="border-2 border-gray-400 h-11 rounded-md px-2"
+            placeholder="Insert Node"
+          />
+          <button
+            id="btn-add-node"
+            class="bg-purple-500 h-11 w-20 rounded-md text-white font-bold"
+          >
+            Add
+          </button>
+        </div>
+        <div class="mt-2">
+          <button
+            id="btn-remove"
+            class="bg-purple-500 h-11 w-20 rounded-md text-white font-bold"
+          >
+            Remove
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.18.2/cytoscape.min.js"
-    integrity="sha512-CBGCXtszkG5rYlQSTNUzk54/731Kz28WPk2uT1GCPCqgfVRJ2v514vzzf16HuGX9WVtE7JLqRuAERNAzFZ9Hpw=="
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
-  <script src="js/cytoscape-edgehandles.js"></script>
-  <script src="js/grapher.js"></script>
-</body>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.18.2/cytoscape.min.js"
+      integrity="sha512-CBGCXtszkG5rYlQSTNUzk54/731Kz28WPk2uT1GCPCqgfVRJ2v514vzzf16HuGX9WVtE7JLqRuAERNAzFZ9Hpw=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
+    <script src="js/cytoscape-edgehandles.js"></script>
+    <script src="js/grapher.js"></script>
+  </body>
 </html>
