@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
       animationEase: "ease-in-out",
       directed: false,
     },
-
     // style default
     style: [
       {
@@ -64,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
         style: {
           "curve-style": "bezier",
         },
+        
       },
 
       // some style for the extension
@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
         selector: ".eh-preview, .eh-ghost-edge",
         style: {
           "background-color": "red",
-          "line-color": "red",
           "target-arrow-color": "red",
           "source-arrow-color": "red",
         },
@@ -121,12 +120,16 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       },
     ],
-
     // List elements default saat instansiasi objek cy
     elements: savedElements,
   }));
 
-  var eh = cy.edgehandles();
+  
+  var eh = cy.edgehandles({
+    edgeType: function (sourceNode, targetNode) {
+        return sourceNode.edgesWith(targetNode).empty() ? 'flat' : null;
+    },
+});
 
   let btnAddNode = document.getElementById("btn-add-node");
   btnAddNode.addEventListener("click", function (e) {
