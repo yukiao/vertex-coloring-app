@@ -6,8 +6,6 @@ function setElementsStorage() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  var selectedItem;
-
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
   if (savedElements) {
@@ -162,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let btnRemoveNode = document.getElementById("btn-remove");
   btnRemoveNode.addEventListener("click", function (e) {
     try {
-      cy.remove(selectedItem);
+        cy.remove(cy.$(':selected'));
       setElementsStorage();
       cy.layout({
         name: "circle",
@@ -180,7 +178,4 @@ document.addEventListener("DOMContentLoaded", function () {
     setElementsStorage();
   });
 
-  cy.on("tap", function (event) {
-    selectedItem = event.target;
-  });
 });
