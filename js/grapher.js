@@ -8,7 +8,10 @@ function setElementsStorage() {
 document.addEventListener("DOMContentLoaded", function () {
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
-  if (savedElements) {
+  if (
+    savedElements.hasOwnProperty("nodes") ||
+    savedElements.hasOwnProperty("edges")
+  ) {
     if (savedElements.nodes) {
       savedElements.nodes = savedElements.nodes.filter((node) => {
         return !(
@@ -26,6 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       });
     }
+  } else {
+    savedElements = {
+      nodes: [],
+      edges: [],
+    };
   }
 
   // Inisialisasi objek cytoscape
@@ -160,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let btnRemoveNode = document.getElementById("btn-remove");
   btnRemoveNode.addEventListener("click", function (e) {
     try {
-        cy.remove(cy.$(':selected'));
+      cy.remove(cy.$(":selected"));
       setElementsStorage();
       cy.layout({
         name: "circle",
@@ -177,5 +185,4 @@ document.addEventListener("DOMContentLoaded", function () {
   cy.on("ehcomplete", function (e) {
     setElementsStorage();
   });
-
 });
