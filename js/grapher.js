@@ -126,9 +126,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   
   var eh = cy.edgehandles({
+    edgeParams: function () {
+        return { data: { fresh: true } };
+      },
     edgeType: function (sourceNode, targetNode) {
-        return sourceNode.edgesWith(targetNode).empty() ? 'flat' : null;
+        let edges = sourceNode.edgesTo(targetNode);
+        if (!sourceNode.edgesWith(targetNode).empty()) {
+            let is_fresh = edges[0].data().fresh === true;
+            if (is_fresh) { 
+                return 'flat'; 
+            } else { 
+                return null;
+            }
+        } else {
+            return 'flat'
+        }
+            
     },
+    complete: function () {
+        return { data: { fresh: false } };
+
+    }
 });
 
   let btnAddNode = document.getElementById("btn-add-node");
