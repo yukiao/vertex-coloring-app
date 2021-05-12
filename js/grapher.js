@@ -43,9 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
       edges: [],
     };
   }
-  
 
- 
   // Inisialisasi objek cytoscape
 
   var cy = (window.cy = cytoscape({
@@ -183,7 +181,6 @@ document.addEventListener("DOMContentLoaded", function () {
       cy.remove(cy.$(":selected"));
       setElementsStorage();
       rerender();
-
     } catch (e) {
       console.log("Error couldn't locate object!");
     }
@@ -204,7 +201,6 @@ document.addEventListener("DOMContentLoaded", function () {
     rerender();
   });
 
-
   let btnColorNodes = document.getElementById("btn-color-nodes");
   btnColorNodes.addEventListener("click", function (e) {
     const nodes = cy
@@ -212,9 +208,9 @@ document.addEventListener("DOMContentLoaded", function () {
       .jsons()
       .filter((element) => element.group === "nodes");
     welshPowell(nodes);
-    document.getElementById("chromatic-number").innerText = getChromaticNumber();
+    document.getElementById("chromatic-number").innerText =
+      getChromaticNumber();
     document.getElementById("delta").innerText = getDelta();
-
     resetTable();
     loadTableData();
   });
@@ -223,7 +219,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setElementsStorage();
   });
 
-
   function getChromaticNumber() {
     let colors = getSortedColoredNodes();
     return Object.keys(colors).length;
@@ -231,33 +226,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getDelta() {
     let delta = 0;
-    cy.nodes().forEach(node => {
-      delta = node.connectedEdges().length > delta ? node.connectedEdges().length : delta;
+    cy.nodes().forEach((node) => {
+      delta =
+        node.connectedEdges().length > delta
+          ? node.connectedEdges().length
+          : delta;
     });
     return delta;
   }
 
   function getNodeColor(v) {
-    return v.style()['background-color'] ;
+    return v.style()["background-color"];
   }
 
   function getSortedColoredNodes() {
-    let output = {}
+    let output = {};
     let nodes = cy.nodes();
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       if (output[getNodeColor(node)] == undefined) {
-        output[getNodeColor(node)] = [node,];
+        output[getNodeColor(node)] = [node];
       } else {
         output[getNodeColor(node)].push(node);
       }
-    })
+    });
     return output;
   }
 
   function getNodeId(v) {
-    return v.data()['id'];
+    return v.data()["id"];
   }
-
 
   function resetTable() {
     let table = document.getElementById("t-body");
@@ -268,8 +265,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let table = document.getElementById("t-body");
     let sortedNodes = getSortedColoredNodes();
     let counter = 1;
-    Object.keys(sortedNodes).forEach(key => {
-      sortedNodes[key].forEach(node => {
+    Object.keys(sortedNodes).forEach((key) => {
+      sortedNodes[key].forEach((node) => {
         let row = table.insertRow();
         let no = row.insertCell(0);
         let color = row.insertCell(1);
@@ -282,8 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tNode.innerHTML = getNodeId(node);
         tNode.classList.add("px-6", "py-4", "whitespace-nowrap");
         counter++;
-      })
-    })
-
+      });
+    });
   }
 });

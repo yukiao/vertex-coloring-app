@@ -6,11 +6,13 @@ export default function welshPowell(nodeList) {
   let adjList = [];
 
   // Filter original node
-  const realNodes = nodeList.filter((node) => {
+  let realNodes = nodeList.filter((node) => {
     return !(
       node.classes.includes("eh-handle") || node.classes.includes("eh-ghost")
     );
   });
+
+  realNodes = realNodes.filter((node) => node.data.id.length <= 20);
 
   // List of node id
   const nodesId = realNodes.map((node) => node.data.id);
@@ -102,8 +104,8 @@ export default function welshPowell(nodeList) {
     }
   });
 
-//   document.getElementById("chromatic-number").innerText =
-//     colorList.length;
+  //   document.getElementById("chromatic-number").innerText =
+  //     colorList.length;
 }
 
 // function setNodeColor(node, color) {
