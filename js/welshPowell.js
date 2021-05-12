@@ -103,7 +103,7 @@ export default function welshPowell(nodeList) {
   });
 
   document.getElementById("chromatic-number").innerText =
-    "Warna yang digunakan : " + colorList.length;
+    colorList.length;
 }
 
 // function setNodeColor(node, color) {

@@ -9,38 +9,49 @@ function setElementsStorage() {
 document.addEventListener("DOMContentLoaded", function () {
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
-  if (savedElements == null) {
+  try {
+    if (
+      savedElements.hasOwnProperty("nodes") ||
+      savedElements.hasOwnProperty("edges")
+    ) {
+      if (savedElements.nodes) {
+        savedElements.nodes = savedElements.nodes.filter((node) => {
+          return !(
+            node.classes.includes("eh-handle") ||
+            node.classes.includes("eh-ghost")
+          );
+        });
+      }
+
+      if (savedElements.edges) {
+        savedElements.edges = savedElements.edges.filter((edge) => {
+          return !(
+            edge.classes.includes("eh-handle") ||
+            edge.classes.includes("eh-ghost")
+          );
+        });
+      }
+    } else {
+      savedElements = {
+        nodes: [],
+        edges: [],
+      };
+    }
+  } catch (e) {
     savedElements = {
       nodes: [],
       edges: [],
     };
   }
-  if (
-    savedElements.hasOwnProperty("nodes") ||
-    savedElements.hasOwnProperty("edges")
-  ) {
-    if (savedElements.nodes) {
-      savedElements.nodes = savedElements.nodes.filter((node) => {
-        return !(
-          node.classes.includes("eh-handle") ||
-          node.classes.includes("eh-ghost")
-        );
-      });
-    }
+  
 
-    if (savedElements.edges) {
-      savedElements.edges = savedElements.edges.filter((edge) => {
-        return !(
-          edge.classes.includes("eh-handle") ||
-          edge.classes.includes("eh-ghost")
-        );
-      });
-    }
-  } else {
-    savedElements = {
-      nodes: [],
-      edges: [],
-    };
+  if (savedElements.edges) {
+    savedElements.edges = savedElements.edges.filter((edge) => {
+      return !(
+        edge.classes.includes("eh-handle") ||
+        edge.classes.includes("eh-ghost")
+      );
+    });
   }
 
   // Inisialisasi objek cytoscape
@@ -193,16 +204,101 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  let btnCheck = document.getElementById("btn-check");
-  btnCheck.addEventListener("click", function (e) {
+  function rerender() {
+    cy.layout({
+      name: "circle",
+      animate: true,
+      animationDuration: 500,
+      animationEase: "ease-in-out",
+      directed: false,
+    }).run();
+  }
+
+  let rerenderBtn = document.getElementById("btn-rerender");
+  rerenderBtn.addEventListener("click", function (e) {
+    rerender();
+  });
+
+
+  let btnColorNodes = document.getElementById("btn-color-nodes");
+  btnColorNodes.addEventListener("click", function (e) {
     const nodes = cy
       .elements()
       .jsons()
       .filter((element) => element.group === "nodes");
     welshPowell(nodes);
+    document.getElementById("chromatic-number").innerText = getChromaticNumber();
+    document.getElementById("delta").innerText = getDelta();
+
+    resetTable();
+    loadTableData();
   });
 
   cy.on("ehcomplete", function (e) {
     setElementsStorage();
   });
+
+
+  function getChromaticNumber() {
+    let colors = getSortedColoredNodes();
+    return Object.keys(colors).length;
+  }
+
+  function getDelta() {
+    let delta = 0;
+    cy.nodes().forEach(node => {
+      delta = node.connectedEdges().length > delta ? node.connectedEdges().length : delta;
+    });
+    return delta;
+  }
+
+  function getNodeColor(v) {
+    return v.style()['background-color'] ;
+  }
+
+  function getSortedColoredNodes() {
+    let output = {}
+    let nodes = cy.nodes();
+    nodes.forEach(node => {
+      if (output[getNodeColor(node)] == undefined) {
+        output[getNodeColor(node)] = [node,];
+      } else {
+        output[getNodeColor(node)].push(node);
+      }
+    })
+    return output;
+  }
+
+  function getNodeId(v) {
+    return v.data()['id'];
+  }
+
+
+  function resetTable() {
+    let table = document.getElementById("t-body");
+    table.innerHTML = "";
+  }
+
+  function loadTableData() {
+    let table = document.getElementById("t-body");
+    let sortedNodes = getSortedColoredNodes();
+    let counter = 1;
+    Object.keys(sortedNodes).forEach(key => {
+      sortedNodes[key].forEach(node => {
+        let row = table.insertRow();
+        let no = row.insertCell(0);
+        let color = row.insertCell(1);
+        let tNode = row.insertCell(2);
+        color.style.backgroundColor = getNodeColor(node);
+        color.classList.add("px-6", "py-4", "whitespace-nowrap");
+        color.innerHTML = getNodeColor(node);
+        no.innerHTML = counter;
+        no.classList.add("px-6", "py-4", "whitespace-nowrap");
+        tNode.innerHTML = getNodeId(node);
+        tNode.classList.add("px-6", "py-4", "whitespace-nowrap");
+        counter++;
+      })
+    })
+
+  }
 });
