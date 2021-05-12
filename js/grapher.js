@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     container: document.getElementById("cy"),
 
     // menonaktifkan fitur zoom dengan mouse wheel
-    zoomingEnabled: true,
+    zoomingEnabled: false,
 
     // layout dari graph berbentuk circle
     layout: {
@@ -242,6 +242,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function getSortedColoredNodes() {
     let output = {};
     let nodes = cy.nodes();
+
+    nodes = nodes.filter((node) => {
+      return !(node.hasClass("eh-handle") || node.hasClass("eh-ghost"));
+    });
     nodes.forEach((node) => {
       if (output[getNodeColor(node)] == undefined) {
         output[getNodeColor(node)] = [node];
