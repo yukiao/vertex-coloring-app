@@ -169,13 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Membersihkan input field
         document.getElementById("add-node").value = "";
         setElementsStorage();
-        cy.layout({
-          name: "circle",
-          animate: true,
-          animationDuration: 500,
-          animationEase: "ease-in-out",
-          directed: false,
-        }).run();
+        rerender();
       } catch (error) {
         console.log("An error has occured upon adding node:" + nodeId);
       }
@@ -192,13 +186,8 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       cy.remove(cy.$(":selected"));
       setElementsStorage();
-      cy.layout({
-        name: "circle",
-        animate: true,
-        animationDuration: 500,
-        animationEase: "ease-in-out",
-        directed: false,
-      }).run();
+      rerender();
+
     } catch (e) {
       console.log("Error couldn't locate object!");
     }
