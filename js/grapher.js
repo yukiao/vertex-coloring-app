@@ -83,6 +83,10 @@ document.addEventListener("DOMContentLoaded", function () {
           "font-size": "18px",
           "text-valign": "center",
           "text-halign": "center",
+          "background-color": "white",
+          "border-width": "2px",
+          "border-style": "solid",
+          "border-color": "black",
         },
       },
       {
