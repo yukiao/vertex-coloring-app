@@ -7,6 +7,6 @@ Visit the demo [here](https://edge-coloring-app.vercel.app/)
 
 - [x] Add Node
 - [x] Add Edge by dragging a node to another node
-- [ ] Delete Node
-- [ ] Delete Edge
+- [x] Delete Node
+- [x] Delete Edge
 - [ ] Edge Coloring
