@@ -1,3 +1,4 @@
+import welshPowell from "./welshPowell.js";
 /**
  * save current elements to local storage. Used as default value of cytoscape object
  */
@@ -8,6 +9,12 @@ function setElementsStorage() {
 document.addEventListener("DOMContentLoaded", function () {
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
+  if (savedElements == null) {
+    savedElements = {
+      nodes: [],
+      edges: [],
+    };
+  }
   if (
     savedElements.hasOwnProperty("nodes") ||
     savedElements.hasOwnProperty("edges")
@@ -151,7 +158,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // Membersihkan input field
         document.getElementById("add-node").value = "";
         setElementsStorage();
-
         cy.layout({
           name: "circle",
           animate: true,
@@ -163,6 +169,11 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("An error has occured upon adding node:" + nodeId);
       }
     }
+    // const nodes = cy
+    //   .elements()
+    //   .jsons()
+    //   .filter((element) => element.group === "nodes");
+    // welshPowell(nodes);
   });
 
   let btnRemoveNode = document.getElementById("btn-remove");
@@ -180,6 +191,15 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (e) {
       console.log("Error couldn't locate object!");
     }
+  });
+
+  let btnCheck = document.getElementById("btn-check");
+  btnCheck.addEventListener("click", function (e) {
+    const nodes = cy
+      .elements()
+      .jsons()
+      .filter((element) => element.group === "nodes");
+    welshPowell(nodes);
   });
 
   cy.on("ehcomplete", function (e) {
