@@ -102,8 +102,8 @@ export default function welshPowell(nodeList) {
     }
   });
 
-  document.getElementById("chromatic-number").innerText =
-    colorList.length;
+//   document.getElementById("chromatic-number").innerText =
+//     colorList.length;
 }
 
 // function setNodeColor(node, color) {
