@@ -45,15 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
 
-  if (savedElements.edges) {
-    savedElements.edges = savedElements.edges.filter((edge) => {
-      return !(
-        edge.classes.includes("eh-handle") ||
-        edge.classes.includes("eh-ghost")
-      );
-    });
-  }
-
+ 
   // Inisialisasi objek cytoscape
 
   var cy = (window.cy = cytoscape({
