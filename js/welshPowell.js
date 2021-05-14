@@ -3,6 +3,18 @@
  * @param nodeList List of all node of cytoscape instance
  */
 export default function welshPowell(nodeList) {
+  cy.emit("startColoring");
+  cy.nodes().forEach((node) => {
+    if (
+      !(
+        node.classes().includes("eh-handle") ||
+        node.classes().includes("eh-ghost")
+      )
+    ) {
+      node.style({ "background-color": "#fff" });
+    }
+  });
+
   let adjList = [];
 
   // Filter original node
@@ -94,15 +106,24 @@ export default function welshPowell(nodeList) {
   //   }
   // }
 
-  cy.nodes().forEach((node) => {
-    for (let i = 0; i < colorList.length; i++) {
-      //   console.log(colorList[i);
-      if (colorList[i].nodes.includes(node.id())) {
-        // console.log(colorList);
-        node.style({ "background-color": colorList[i].color });
-      }
-    }
-  });
+  let count = 0;
+  for (let i = 0; i < colorList.length; i++) {
+    let nodes = colorList[i].nodes;
+    let color = colorList[i].color;
+
+    nodes.forEach((node) => {
+      setTimeout(function () {
+        cy.$(`#${node}`).style({ "background-color": color });
+      }, 200 + count);
+      count = count + 200;
+    });
+
+    count = count + 500;
+  }
+
+  setTimeout(() => {
+    cy.emit("finished");
+  }, count);
 
   //   document.getElementById("chromatic-number").innerText =
   //     colorList.length;
