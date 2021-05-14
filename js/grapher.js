@@ -208,11 +208,18 @@ document.addEventListener("DOMContentLoaded", function () {
       .jsons()
       .filter((element) => element.group === "nodes");
     welshPowell(nodes);
-    document.getElementById("chromatic-number").innerText =
-      getChromaticNumber();
-    document.getElementById("delta").innerText = getDelta();
-    resetTable();
-    loadTableData();
+    cy.on("startColoring", function () {
+      document.getElementById("chromatic-number").innerText = "";
+      document.getElementById("delta").innerText = "";
+      resetTable();
+    });
+    cy.on("finished", function () {
+      document.getElementById("chromatic-number").innerText =
+        getChromaticNumber();
+      document.getElementById("delta").innerText = getDelta();
+      resetTable();
+      loadTableData();
+    });
   });
 
   cy.on("ehcomplete", function (e) {
@@ -226,12 +233,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getDelta() {
     let delta = 0;
+
     cy.nodes().forEach((node) => {
       delta =
         node.connectedEdges().length > delta
           ? node.connectedEdges().length
           : delta;
     });
+
     return delta;
   }
 
@@ -241,6 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getSortedColoredNodes() {
     let output = {};
+
     let nodes = cy.nodes();
 
     nodes = nodes.filter((node) => {
@@ -253,6 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
         output[getNodeColor(node)].push(node);
       }
     });
+
     return output;
   }
 
