@@ -15,9 +15,3 @@ h1 {
 	bottom: 0;
 	z-index: 99999;
 }
-
-#cy {
-	width: min-content;
-	height: 500px;
-	display: block;
-}
