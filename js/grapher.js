@@ -208,11 +208,13 @@ document.addEventListener("DOMContentLoaded", function () {
       .jsons()
       .filter((element) => element.group === "nodes");
     welshPowell(nodes);
+
     cy.on("startColoring", function () {
       document.getElementById("chromatic-number").innerText = "";
       document.getElementById("delta").innerText = "";
       resetTable();
     });
+
     cy.on("finished", function () {
       document.getElementById("chromatic-number").innerText =
         getChromaticNumber();
