@@ -1,9 +1,12 @@
 /**
  *
- * @param nodeList List of all node of cytoscape instance
+ * @param nodeList a list of all nodes of Cytoscape
  */
 export default function welshPowell(nodeList) {
+  // Emit start event
   cy.emit("startColoring");
+
+  // Set default colour to all vertex
   cy.nodes().forEach((node) => {
     if (
       !(
@@ -15,6 +18,7 @@ export default function welshPowell(nodeList) {
     }
   });
 
+  // Adjacency list
   let adjList = [];
 
   // Filter original node
@@ -42,15 +46,20 @@ export default function welshPowell(nodeList) {
     });
   });
 
+  // Sort descending based on the number of degrees
   adjList.sort(function (a, b) {
     return b.degree - a.degree;
   });
 
+  // Holds the vertex that has been coloured
   const colored = [];
 
   for (let i = 0; i < adjList.length; i++) {
+    // Hold adjacent vertices
     const adjacent = new Set();
+
     if (!colored.includes(adjList[i].id)) {
+      // Holds Vertex with same colour
       const sameNodeColor = [];
 
       sameNodeColor.push(adjList[i].id);
@@ -67,6 +76,7 @@ export default function welshPowell(nodeList) {
         }
       }
 
+      // Generate random colour
       const color = randomColor();
       colorList.push({
         nodes: sameNodeColor,
@@ -75,9 +85,7 @@ export default function welshPowell(nodeList) {
     }
   }
 
-  console.log(colorList);
-
-  let count = 0;
+  let waitingTime = 0;
   for (let i = 0; i < colorList.length; i++) {
     let nodes = colorList[i].nodes;
     let color = colorList[i].color;
@@ -85,14 +93,14 @@ export default function welshPowell(nodeList) {
     nodes.forEach((node) => {
       setTimeout(function () {
         cy.$(`#${node}`).style({ "background-color": color });
-      }, 200 + count);
-      count = count + 200;
+      }, 200 + waitingTime);
+      waitingTime = waitingTime + 200;
     });
 
-    count = count + 500;
+    waitingTime = waitingTime + 500;
   }
 
   setTimeout(() => {
     cy.emit("finished");
-  }, count);
+  }, waitingTime);
 }
