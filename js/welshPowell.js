@@ -32,27 +32,19 @@ export default function welshPowell(nodeList) {
 
   nodesId.forEach((node) => {
     let currentNode = cy.$(`#${node}`);
-    // console.log(currentNode.id() + " - " + currentNode.degree());
 
     const neighbors = currentNode.neighborhood("node").map((node) => node.id());
-    // adjList[currentNode.id()] = {
-    //   neighbors,
-    //   degree: currentNode.degree(),
-    // };
+
     adjList.push({
       id: currentNode.id(),
       neighbors,
       degree: currentNode.degree(),
     });
-    // neighbors.forEach((node) => console.log(node.id()));
-    // console.log("-------------------------------------------------------");
   });
 
   adjList.sort(function (a, b) {
     return b.degree - a.degree;
   });
-
-  //   console.log(nodeList);
 
   const colored = [];
 
@@ -85,27 +77,6 @@ export default function welshPowell(nodeList) {
 
   console.log(colorList);
 
-  // for (let i = 0; i < adjList.length; i++) {
-  //   if (!colored.includes(adjList[i].id)) {
-  //     colored.push(adjList[i].id);
-
-  //     let sameColor = nodesId.filter(
-  //       (node) => !adjList[i].neighbors.includes(node)
-  //     );
-
-  //     sameColor = sameColor.filter((node) => !colored.includes(node));
-
-  //     if (sameColor.length) {
-  //       sameColor.forEach((node) => colored.push(node));
-  //     }
-
-  //     colorList.push({
-  //       nodes: [adjList[i].id, ...sameColor],
-  //       color: randomColor(),
-  //     });
-  //   }
-  // }
-
   let count = 0;
   for (let i = 0; i < colorList.length; i++) {
     let nodes = colorList[i].nodes;
@@ -124,11 +95,4 @@ export default function welshPowell(nodeList) {
   setTimeout(() => {
     cy.emit("finished");
   }, count);
-
-  //   document.getElementById("chromatic-number").innerText =
-  //     colorList.length;
 }
-
-// function setNodeColor(node, color) {
-//   node.style({ "background-color": color });
-// }
