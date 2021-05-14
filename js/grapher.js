@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     container: document.getElementById("cy"),
 
     // menonaktifkan fitur zoom dengan mouse wheel
-    zoomingEnabled: false,
+    zoomingEnabled: true,
 
     // layout dari graph berbentuk circle
     layout: {
