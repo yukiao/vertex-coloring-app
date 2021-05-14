@@ -3,156 +3,122 @@
   <head>
     <title>Edge Coloring</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet" />
   </head>
 
-  <body class="box-border py-5">
-    <div class="w-5/6 mx-auto flex h-full">
-      <div id="cy" class="flex-1 h-full border-4 border-black rounded-xl"></div>
-      <div class="flex-1 p-5">
-        <div>
-          <input
-            id="add-node"
-            type="text"
-            class="border-2 border-gray-400 h-11 rounded-md px-2"
-            placeholder="Insert Node"
-            maxlength="20"
-          />
-          <button
-            id="btn-add-node"
-            class="bg-purple-500 h-11 w-20 rounded-md text-white font-bold"
-          >
-            Add
-          </button>
-        </div>
-        <div class="mt-2">
-          <button
-            id="btn-remove"
-            class="
-              bg-purple-500
-              h-11
-              w-20
-              rounded-md
-              text-white
-              font-bold
-              focus:outline-none
-            "
-          >
-            Remove
-          </button>
-        </div>
-        <div class="mt-2">
-          <button
-            id="btn-rerender"
-            class="bg-purple-500 h-11 w-20 rounded-md text-white font-bold"
-          >
-            Rerender
-          </button>
-          <!--           <button
-            id="btn-check"
-            class="
-              bg-purple-500
-              h-11
-              w-32
-              rounded-md
-              text-white
-              font-bold
-              focus:outline-none
-            "
-          >
-            Color Nodes
+  <body>
 
-          </button> -->
-        </div>
-        <div class="mt-2">
-          <button
-            id="btn-color-nodes"
-            class="bg-purple-500 h-11 w-20 rounded-md text-white font-bold"
-          >
-            Color vertices
-          </button>
-          <p>&#x1D6D8;(G) = <span id="chromatic-number"></span></p>
-          <p>&Delta; = <span id="delta"></span></p>
+    <div class="grid grid-cols-7 place-content-center text-center">
+      <!-- 1 -->
+      <div class="col-span-7 top-0 h-16 text-center shadow-lg mb-5 bg-purple-500">
+        <div class="font-black text-2xl text-white subpixel-antialiased font-sans p-5">
+          VERTICES COLORING APP
         </div>
       </div>
-    </div>
-    <div class="flex flex-col m-5">
-      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div
-            class="
-              shadow
-              overflow-hidden
-              border-b border-gray-200
-              sm:rounded-lg
-            "
-          >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th
-                    scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-gray-500
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    No
-                  </th>
-                  <th
-                    scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-gray-500
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Color
-                  </th>
-                  <th
-                    scope="col"
-                    class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-gray-500
-                      uppercase
-                      tracking-wider
-                    "
-                  >
-                    Node
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="bg-white divide-y divide-gray-200"
-                id="t-body"
-              ></tbody>
-            </table>
+      
+      <!-- 2 -->
+      <div class="col-span-7">
+
+        <div class="lg:w-screen sm:w-80 flex px-16 mx-auto h-full">
+          <div id="cy" class="flex-1 border-4 border-black border-double rounded-xl"></div>
+        
+          <div class="flex flex-col space-y-4 pl-4">
+        
+            <div class="flex-none">
+              <input id="add-node" type="text" class="inline border-2 border-gray-400 h-14 rounded-md px-2 focus:ring-2 focus:ring-blue-600"
+                placeholder="Insert Node" maxlength="20" />
+              <button id="btn-add-node" class="inline bg-purple-500 h-14 w-20 pt-1 rounded-md text-white font-black text-base font-sans
+              transition duration-100 ease-in-out hover:bg-purple-600">
+                ADD
+              </button>
+            </div>
+        
+            <div class="flex-none">
+              <div class="mt-2">
+                <button id="btn-remove"
+                  class="bg-purple-500 h-14 w-full rounded-md text-white font-black text-base font-sans focus:outline-none
+                  transition duration-100 ease-in-out hover:bg-purple-600">
+                  REMOVE
+                </button>
+              </div>
+        
+              <div class="mt-2">
+                <button id="btn-rerender" class="bg-purple-500 h-14 w-full rounded-md text-white font-black text-base font-sans
+                transition duration-100 ease-in-out hover:bg-purple-600">
+                  RERENDER
+                </button>
+              </div>
+        
+              <div class="mt-2">
+                <button id="btn-color-nodes" class="bg-purple-500 h-14 w-full rounded-md text-white font-black text-base font-sans
+                transition duration-100 ease-in-out hover:bg-purple-600">
+                  COLOR VERTICES
+                </button>
+              </div>
+            </div>
+        
+            <div class="flex-initial shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-200 text-center font-sans">
+                <thead class="bg-gray-200">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-sm text-gray-500 uppercase tracking-wider font-extrabold">
+                      &#x1D6D8;(G)
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-sm text-gray-500 uppercase tracking-wider font-extrabold">
+                      &Delta;
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200 font-bold font-sans">
+                  <tr>
+                    <td><span id="chromatic-number"></span></td>
+                    <td><span id="delta"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-span-1">
+
+      </div>
+      
+      <!-- 3 -->
+      <div class="col-span-4">
+        
+        <div class="flex flex-col m-5 px-10">
+          <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200 text-center font-sans">
+                  <thead class="bg-gray-200">
+                    <tr>
+                      <th scope="col" class="px-6 py-3 text-base text-gray-500 uppercase tracking-wider font-extrabold">
+                        No
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-base text-gray-500 uppercase tracking-wider font-extrabold">
+                        Color
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-base text-gray-500 uppercase tracking-wider font-extrabold">
+                        Node
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="t-body" class="bg-white divide-y divide-gray-200 font-bold text-base"></tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+        
     </div>
-
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.18.2/cytoscape.min.js"
-      integrity="sha512-CBGCXtszkG5rYlQSTNUzk54/731Kz28WPk2uT1GCPCqgfVRJ2v514vzzf16HuGX9WVtE7JLqRuAERNAzFZ9Hpw=="
-      crossorigin="anonymous"
-    ></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.18.2/cytoscape.min.js" integrity="sha512-CBGCXtszkG5rYlQSTNUzk54/731Kz28WPk2uT1GCPCqgfVRJ2v514vzzf16HuGX9WVtE7JLqRuAERNAzFZ9Hpw==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"></script>
     <script src="js/cytoscape-edgehandles.js"></script>
