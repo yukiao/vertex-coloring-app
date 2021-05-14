@@ -1,6 +1,6 @@
-# vertices-coloring-app
+# vertex-coloring-app
 
-This is a project for demonstrating the coloring of vertices on graph. Build using [Cytoscape.js](http://js.cytoscape.org) and [Tailwind CSS](http://tailwindcss.com).  
+This project demonstrates the coloring of vertices of a graph. Built with [Cytoscape.js](http://js.cytoscape.org) and [Tailwind CSS](http://tailwindcss.com).  
 Visit the demo [here](https://edge-coloring-app.vercel.app/)
 
 ## Features
@@ -9,4 +9,4 @@ Visit the demo [here](https://edge-coloring-app.vercel.app/)
 - [x] Add Edge by dragging a node to another node
 - [x] Delete Node
 - [x] Delete Edge
-- [x] Vertices Coloring
+- [x] Vertex Coloring
