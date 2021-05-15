@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // pisah dengan spasi untuk menambah node baru
     // memungkinkan lebih dari satu node
-    const nodeIdList = nodeId.split(";").replaceAll("");
+    const nodeIdList = nodeId.split(";").replaceAll(" ", "");
     if (nodeId != "") {
       try {
         
