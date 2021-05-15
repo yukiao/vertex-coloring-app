@@ -6,7 +6,7 @@ export default function welshPowell(nodeList) {
   // Emit start event
   cy.emit("startColoring");
 
-  let hasAnimations = document.getElementById("toggle").checked;
+  let hasAnimations = document.getElementById("toggle-animate").checked;
 
   // Set default colour to all vertex
 

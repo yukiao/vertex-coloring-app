@@ -3,7 +3,11 @@ import welshPowell from "./welshPowell.js";
  * save current elements to local storage. Used as default value of cytoscape object
  */
 function setElementsStorage() {
-  localStorage.setItem("elements", JSON.stringify(cy.json().elements));
+  if (document.getElementById("toggle-autosave").checked) {
+    localStorage.setItem("elements", JSON.stringify(cy.json().elements));
+  } else {
+    removeElementsStorage();
+  }
 }
 
 function removeElementsStorage() {
@@ -11,8 +15,6 @@ function removeElementsStorage() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  removeElementsStorage(); // hapus graf setiap kali refresh
-
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
   try {
@@ -56,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // container merujuk pada id dari element html untuk menampung hasil dari graph
     container: document.getElementById("cy"),
 
-    // menonaktifkan fitur zoom dengan mouse wheel
     zoomingEnabled: true,
 
     // layout dari graph berbentuk circle
@@ -160,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // pisah dengan spasi untuk menambah node baru
     // memungkinkan lebih dari satu node
-    const nodeIdList = nodeId.split(";");
+    const nodeIdList = nodeId.replaceAll(" ", "").split(";");
     if (nodeId != "") {
       try {
         
