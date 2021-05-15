@@ -4,6 +4,8 @@
  */
 export default function welshPowell(nodeList) {
   cy.emit("startColoring");
+  let hasAnimations = document.getElementById("toggle").checked;
+
   cy.nodes().forEach((node) => {
     if (
       !(
@@ -115,10 +117,10 @@ export default function welshPowell(nodeList) {
       setTimeout(function () {
         cy.$(`#${node}`).style({ "background-color": color });
       }, 200 + count);
-      count = count + 200;
+      count = (count + 200) * hasAnimations;
     });
 
-    count = count + 500;
+    count = (count + 500) * hasAnimations;
   }
 
   setTimeout(() => {
