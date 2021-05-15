@@ -156,6 +156,29 @@
             </div>
           </div>
 
+          <div >
+            <div class="flex items-center justify-center w-full mb-4">
+              <label for="toggle" class="flex items-center cursor-pointer">
+                <!-- toggle -->
+                <div class="relative">
+                  <!-- input -->
+                  <input type="checkbox" id="toggle" class="sr-only" checked=true>
+                  <!-- line -->
+                  <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                  <!-- dot -->
+                  <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                </div>
+                <!-- label -->
+                <div class="ml-3 text-gray-700 font-medium">
+                  Animate
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="flex-initial shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200 text-center font-sans">
+
+
           <div
             class="
               flex-initial
@@ -168,6 +191,7 @@
             <table
               class="min-w-full divide-y divide-gray-200 text-center font-sans"
             >
+
               <thead class="bg-gray-200">
                 <tr>
                   <th
@@ -210,7 +234,7 @@
       </div>
     </div>
     <div class="flex flex-col m-5">
-      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="-my-2">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div
             class="
@@ -251,6 +275,10 @@
                   >
                     Color
                   </th>
+
+                  <th scope="col" class="px-6 py-3 text-base text-gray-500 uppercase tracking-wider font-extrabold">
+                    Vertex
+
                   <th
                     scope="col"
                     class="
@@ -263,6 +291,7 @@
                     "
                   >
                     Node
+
                   </th>
                 </tr>
               </thead>

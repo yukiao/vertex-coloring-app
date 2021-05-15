@@ -6,7 +6,12 @@ export default function welshPowell(nodeList) {
   // Emit start event
   cy.emit("startColoring");
 
+  let hasAnimations = document.getElementById("toggle").checked;
+
+
+
   // Set default colour to all vertex
+
   cy.nodes().forEach((node) => {
     if (
       !(
@@ -93,11 +98,19 @@ export default function welshPowell(nodeList) {
     nodes.forEach((node) => {
       setTimeout(function () {
         cy.$(`#${node}`).style({ "background-color": color });
+
+      }, 200 + count);
+      count = (count + 200) * hasAnimations;
+    });
+
+    count = (count + 500) * hasAnimations;
+
       }, 200 + waitingTime);
       waitingTime = waitingTime + 200;
     });
 
     waitingTime = waitingTime + 500;
+
   }
 
   setTimeout(() => {
