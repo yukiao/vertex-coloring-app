@@ -1,10 +1,16 @@
 /**
  *
- * @param nodeList List of all node of cytoscape instance
+ * @param nodeList a list of all nodes of Cytoscape
  */
 export default function welshPowell(nodeList) {
+  // Emit start event
   cy.emit("startColoring");
+
   let hasAnimations = document.getElementById("toggle").checked;
+
+
+
+  // Set default colour to all vertex
 
   cy.nodes().forEach((node) => {
     if (
@@ -17,6 +23,7 @@ export default function welshPowell(nodeList) {
     }
   });
 
+  // Adjacency list
   let adjList = [];
 
   // Filter original node
@@ -34,33 +41,30 @@ export default function welshPowell(nodeList) {
 
   nodesId.forEach((node) => {
     let currentNode = cy.$(`#${node}`);
-    // console.log(currentNode.id() + " - " + currentNode.degree());
 
     const neighbors = currentNode.neighborhood("node").map((node) => node.id());
-    // adjList[currentNode.id()] = {
-    //   neighbors,
-    //   degree: currentNode.degree(),
-    // };
+
     adjList.push({
       id: currentNode.id(),
       neighbors,
       degree: currentNode.degree(),
     });
-    // neighbors.forEach((node) => console.log(node.id()));
-    // console.log("-------------------------------------------------------");
   });
 
+  // Sort descending based on the number of degrees
   adjList.sort(function (a, b) {
     return b.degree - a.degree;
   });
 
-  //   console.log(nodeList);
-
+  // Holds the vertex that has been coloured
   const colored = [];
 
   for (let i = 0; i < adjList.length; i++) {
+    // Hold adjacent vertices
     const adjacent = new Set();
+
     if (!colored.includes(adjList[i].id)) {
+      // Holds Vertex with same colour
       const sameNodeColor = [];
 
       sameNodeColor.push(adjList[i].id);
@@ -77,6 +81,7 @@ export default function welshPowell(nodeList) {
         }
       }
 
+      // Generate random colour
       const color = randomColor();
       colorList.push({
         nodes: sameNodeColor,
@@ -85,30 +90,7 @@ export default function welshPowell(nodeList) {
     }
   }
 
-  console.log(colorList);
-
-  // for (let i = 0; i < adjList.length; i++) {
-  //   if (!colored.includes(adjList[i].id)) {
-  //     colored.push(adjList[i].id);
-
-  //     let sameColor = nodesId.filter(
-  //       (node) => !adjList[i].neighbors.includes(node)
-  //     );
-
-  //     sameColor = sameColor.filter((node) => !colored.includes(node));
-
-  //     if (sameColor.length) {
-  //       sameColor.forEach((node) => colored.push(node));
-  //     }
-
-  //     colorList.push({
-  //       nodes: [adjList[i].id, ...sameColor],
-  //       color: randomColor(),
-  //     });
-  //   }
-  // }
-
-  let count = 0;
+  let waitingTime = 0;
   for (let i = 0; i < colorList.length; i++) {
     let nodes = colorList[i].nodes;
     let color = colorList[i].color;
@@ -116,21 +98,22 @@ export default function welshPowell(nodeList) {
     nodes.forEach((node) => {
       setTimeout(function () {
         cy.$(`#${node}`).style({ "background-color": color });
+
       }, 200 + count);
       count = (count + 200) * hasAnimations;
     });
 
     count = (count + 500) * hasAnimations;
+
+      }, 200 + waitingTime);
+      waitingTime = waitingTime + 200;
+    });
+
+    waitingTime = waitingTime + 500;
+
   }
 
   setTimeout(() => {
     cy.emit("finished");
-  }, count);
-
-  //   document.getElementById("chromatic-number").innerText =
-  //     colorList.length;
+  }, waitingTime);
 }
-
-// function setNodeColor(node, color) {
-//   node.style({ "background-color": color });
-// }

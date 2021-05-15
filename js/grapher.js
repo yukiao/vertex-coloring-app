@@ -208,11 +208,13 @@ document.addEventListener("DOMContentLoaded", function () {
       .jsons()
       .filter((element) => element.group === "nodes");
     welshPowell(nodes);
+
     cy.on("startColoring", function () {
       document.getElementById("chromatic-number").innerText = "";
       document.getElementById("delta").innerText = "";
       resetTable();
     });
+
     cy.on("finished", function () {
       document.getElementById("chromatic-number").innerText =
         getChromaticNumber();
@@ -220,6 +222,11 @@ document.addEventListener("DOMContentLoaded", function () {
       resetTable();
       loadTableData();
     });
+  });
+
+  let btnExport = document.getElementById("btn-export");
+  btnExport.addEventListener("click", function (e) {
+    saveAs(cy.jpg({ full: true, quality: 1 }), "graph.jpg");
   });
 
   cy.on("ehcomplete", function (e) {
