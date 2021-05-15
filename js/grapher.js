@@ -6,13 +6,7 @@ function setElementsStorage() {
   localStorage.setItem("elements", JSON.stringify(cy.json().elements));
 }
 
-function removeElementsStorage() {
-  localStorage.removeItem("elements");
-}
-
 document.addEventListener("DOMContentLoaded", function () {
-  removeElementsStorage(); // hapus graf setiap kali refresh
-
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
   try {
@@ -156,22 +150,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let btnAddNode = document.getElementById("btn-add-node");
   btnAddNode.addEventListener("click", function (e) {
-    let nodeId = document.getElementById("add-node").value.trim();
-
-    // pisah dengan spasi untuk menambah node baru
-    // memungkinkan lebih dari satu node
-    const nodeIdList = nodeId.split(",");
+    let nodeId = document.getElementById("add-node").value;
     if (nodeId != "") {
       try {
-        
-        for(let nodes of nodeIdList) {
-          cy.add({
-            group: "nodes",
-            data: {
-              id: nodes,
-            },
-          });
-        }
+        cy.add({
+          group: "nodes",
+          data: {
+            id: nodeId,
+          },
+        });
 
         // Membersihkan input field
         document.getElementById("add-node").value = "";
@@ -221,13 +208,11 @@ document.addEventListener("DOMContentLoaded", function () {
       .jsons()
       .filter((element) => element.group === "nodes");
     welshPowell(nodes);
-
     cy.on("startColoring", function () {
       document.getElementById("chromatic-number").innerText = "";
       document.getElementById("delta").innerText = "";
       resetTable();
     });
-
     cy.on("finished", function () {
       document.getElementById("chromatic-number").innerText =
         getChromaticNumber();
@@ -235,11 +220,6 @@ document.addEventListener("DOMContentLoaded", function () {
       resetTable();
       loadTableData();
     });
-  });
-
-  let btnExport = document.getElementById("btn-export");
-  btnExport.addEventListener("click", function (e) {
-    saveAs(cy.jpg({ full: true, quality: 1 }), "graph.jpg");
   });
 
   cy.on("ehcomplete", function (e) {
