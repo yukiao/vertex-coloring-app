@@ -6,7 +6,13 @@ function setElementsStorage() {
   localStorage.setItem("elements", JSON.stringify(cy.json().elements));
 }
 
+function removeElementsStorage() {
+  localStorage.removeItem("elements");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  removeElementsStorage(); // hapus graf setiap kali refresh
+  
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
   try {
