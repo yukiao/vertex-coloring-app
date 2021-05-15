@@ -224,6 +224,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  let btnExport = document.getElementById("btn-export");
+  btnExport.addEventListener("click", function (e) {
+    saveAs(cy.jpg({ full: true, quality: 1 }), "graph.jpg");
+  });
+
   cy.on("ehcomplete", function (e) {
     setElementsStorage();
   });
