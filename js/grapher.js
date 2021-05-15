@@ -150,15 +150,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let btnAddNode = document.getElementById("btn-add-node");
   btnAddNode.addEventListener("click", function (e) {
-    let nodeId = document.getElementById("add-node").value;
+    let nodeId = document.getElementById("add-node").value.trim();
+
+    // pisah dengan spasi untuk menambah node baru
+    // memungkinkan lebih dari satu node
+    const nodeIdList = nodeId.split(" ");
     if (nodeId != "") {
       try {
-        cy.add({
-          group: "nodes",
-          data: {
-            id: nodeId,
-          },
-        });
+        
+        for(let nodes of nodeIdList) {
+          cy.add({
+            group: "nodes",
+            data: {
+              id: nodes,
+            },
+          });
+        }
 
         // Membersihkan input field
         document.getElementById("add-node").value = "";
