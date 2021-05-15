@@ -96,7 +96,7 @@ export default function welshPowell(nodeList) {
     nodes.forEach((node) => {
       setTimeout(function () {
         cy.$(`#${node}`).style({ "background-color": color });
-      }, 200 + waitingTime);
+      }, (200 + waitingTime)*hasAnimations);
       waitingTime = (waitingTime + 200) * hasAnimations;
     });
 
