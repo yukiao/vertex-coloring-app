@@ -12,7 +12,7 @@ function removeElementsStorage() {
 
 document.addEventListener("DOMContentLoaded", function () {
   removeElementsStorage(); // hapus graf setiap kali refresh
-  
+
   // Memuat list element terakhir yang dibuat
   let savedElements = JSON.parse(localStorage.getItem("elements"));
   try {
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // pisah dengan spasi untuk menambah node baru
     // memungkinkan lebih dari satu node
-    const nodeIdList = nodeId.split(" ");
+    const nodeIdList = nodeId.split(",");
     if (nodeId != "") {
       try {
         
